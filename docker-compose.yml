@@ -20,6 +20,8 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
       - "5106:5106"
+    stdin_open: true
+    tty: true
 
 networks:
   default:

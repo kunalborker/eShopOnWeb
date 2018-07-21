@@ -17,7 +17,7 @@ RUN dotnet restore
 
 RUN dotnet publish -c Release -o out
 
-FROM microsoft/dotnet:2.1-aspnetcore-runtime AS runtime
+FROM microsoft/dotnet:2.1-aspnetcore-runtime
 WORKDIR /app
 COPY --from=build /app/src/Web/out ./
 
