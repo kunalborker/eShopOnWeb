@@ -8,19 +8,18 @@
 # RUN COMMAND
 #  docker run --name eshopweb --rm -it -p 8000:5106 web
 FROM microsoft/dotnet:2.1-sdk AS build
-WORKDIR /home/kunalb/Downloads/build_agent/work/406200819ceced9d/
+WORKDIR /app
 
 COPY *.sln .
 COPY . .
-WORKDIR /406200819ceced9d/src/Web
+WORKDIR /app/src/Web
 RUN dotnet restore
 
 RUN dotnet publish -c Release -o out
 
-FROM microsoft/dotnet:2.1-aspnetcore-runtime
-WORKDIR /home/kunalb/Downloads/build_agent/work/406200819ceced9d/
-COPY --from=build /home/kunalb/Downloads/build_agent/work/406200819ceced9d/src/Web/out ./
-
+FROM microsoft/dotnet:2.1-aspnetcore-runtime AS runtime
+WORKDIR /app
+COPY --from=build /app/src/Web/out ./
 # Optional: Set this here if not setting it from docker-compose.yml
 # ENV ASPNETCORE_ENVIRONMENT Development
 
